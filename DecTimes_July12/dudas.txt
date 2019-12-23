@@ -1,0 +1,3 @@
+what times do I work with? php or js???
+if after x time there is an automatic response,what is this time? get rid of out samples?
+why data between -4 and 4???
