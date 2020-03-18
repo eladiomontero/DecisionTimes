@@ -1,0 +1,26 @@
+
+*** These modified files were found in JOE when it aborted on Sun Nov 25 14:52:48 2018
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+tafel
+jou
+
+*** File '(Unnamed)'
+makepass.py
+makepass.py
+makepass.py
+makepass.py
+software/data/userlist_print.dat
+software/data/userlist_print_s1t1030.dat
+software/data/userlist.dat
+software/data/userlist.php
+software/data/
+earnings
+earnings
+
+*** File '* Startup Log *'
+Processing '/etc/joe/joerc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/joerc
