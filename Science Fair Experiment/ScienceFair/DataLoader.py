@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import re
 
+
 class DataLoader:
     DATAURL = "../data"
     def loadSessionsData(self):
@@ -85,5 +86,24 @@ class DataLoader:
 
 
 dl = DataLoader()
-#experiment, users = dl.loadSessionsData()
+#data, users = dl.loadSessionsData()
+data = pd.read_csv('./output/experimentData.csv')
+#getting opponent actions
+
+sessions = data.session.unique()
+data["actions"] = ""
+for s in sessions:
+    users = data.loc[data.session == s].user.unique()
+    for u in users:
+        with open("../data/%s/data/%s" % (s, u)) as f:
+            for opponent in f:
+                print("%s %s %s" % (s, u, opponent.strip()))
+                for r in data.loc[data.session == s, "round"].unique():
+                    action1 = ""
+                    if r == 1: action1 = "00"
+                    else:
+                        action1 = "%s%s" % (data.loc[(data["round"] == r-1) & (data["user"] == u) & (data["session"] == s), "response"].item(),
+                                            data.loc[(data["round"] == r-1) & (data["user"] == opponent.strip()) & (data["session"] == s), "response"].item())
+                    data.loc[(data["round"] == r) & (data["user"] == u) & (data["session"] == s), ['actions']] = "%s%s" % (action1, data.loc[(data["round"] == r) & (data["user"] == u) & (data["session"] == s), "response"].item())
+
 #print (users)
