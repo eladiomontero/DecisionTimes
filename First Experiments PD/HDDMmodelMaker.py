@@ -10,6 +10,33 @@ class HDDMmodelMaker():
         #model.find_starting_values()
         model.sample(size, burn = burn)
         return model
+    
+    def gen_synthetic_data(a,v,z,t0,subj_idx,rounds = 10000):
+        sim = pd.DataFrame()
+        dec_times = [0] * subjects
+        responses = [0] * subjects
+        for r in range(rounds):
+            N = 100000
+            s = z * a  # deliberation status
+            D = 1 #Difusion constant
+            for i in range(N):
+                rand = np.random.normal()
+                if (s < a) and s > 0:
+                    s = s - v * t0 + D ** .5 * np.random.randn() * t0**0.5
+                    #dt = dt + 1
+                else:
+                    if s > 0:
+                        responses[r] = 1
+                    dec_times[r] = t0 * i
+                    break
+            if dec_times[r] == 0.0:
+                raise Exception("Not enough steps to reach a decision")
+        dic = {"sub_idx": subj_idx,"rt": dec_times, 'response': responses, "round": [r] * rounds}
+        sim_times = pd.DataFrame(dic)
+        if r == 0:
+            sim = sim_times
+        else:
+            sim = sim.append(sim_times, ignore_index = True)
 
     def get_stats(self, model, subjects = False):
         stats_df = model.gen_stats()
